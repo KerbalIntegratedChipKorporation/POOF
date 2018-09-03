@@ -1,0 +1,7 @@
+stdlib v2.0 Features
+
+ - Semi-automated garbage collector
+ - System state recovery
+ - Modular design
+ - Pseudo-object oriented system via Controller objects.
+ 

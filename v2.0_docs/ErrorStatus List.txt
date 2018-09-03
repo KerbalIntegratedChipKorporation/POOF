@@ -1,0 +1,9 @@
+Error/Status list
+
+0		Nominal
+1		Call to null controller
+2		Controller does not contain the member
+3		Controller member is not a function
+4		Reached end of controller list
+5		Encountered null controller and removed it
+6		Controller is disabled.
