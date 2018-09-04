@@ -148,6 +148,24 @@ function Exec_GetController
 	}
 }
 
+function Exec_GetControllersByType
+{
+	parameter this.
+	parameter type.
+	
+	local controllers is list().
+	
+	from { local i is 0. } until i = this:length step { set i to i + 1. } do
+	{
+		if this[this:keys[i]]["type"] = type then
+		{
+			controllers:add(this[this:keys[i]]).
+		}
+	}
+	
+	return controllers.
+}
+
 function Exec_Call
 {
 	parameter this.
