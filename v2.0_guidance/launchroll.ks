@@ -10,7 +10,7 @@ function LaunchRoll_New
 	parameter rate.
 	parameter pitchProg.	// pitch program name
 	
-	local this is NewController(LaunchRoll_setup@, LaunchRoll_loop@, LaunchRoll_Err@).
+	local this is NewController("launchroll", LaunchRoll_setup@, LaunchRoll_loop@, LaunchRoll_Err@).
 	
 	this:add("platform", platform).
 	this:add("lv", lv).

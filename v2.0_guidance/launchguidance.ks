@@ -7,7 +7,7 @@ function LaunchGuidance_New
 	parameter platform.
 	parameter lv.
 	
-	local this is NewController(LaunchGuidance_setup@, LaunchGuidance_loop@, LaunchGuidance_Err@).
+	local this is NewController("launchguidance", LaunchGuidance_setup@, LaunchGuidance_loop@, LaunchGuidance_Err@).
 	
 	this:add("platform", platform).
 	this:add("lv", lv).

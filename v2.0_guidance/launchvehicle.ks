@@ -8,7 +8,7 @@ function LaunchVehicle_New
 	// Add parameters here
 	parameter stageInfo.
 	
-	local this is NewController(LaunchVehicle_setup@, LaunchVehicle_loop@, LaunchVehicle_Err@).
+	local this is NewController("launchvehicle", LaunchVehicle_setup@, LaunchVehicle_loop@, LaunchVehicle_Err@).
 	
 	// Add arguments to the controller
 	// this:add("x", x).

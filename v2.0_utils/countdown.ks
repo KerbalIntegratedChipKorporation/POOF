@@ -13,7 +13,7 @@ function Countdown_New
 	parameter callbackFunc.
 	parameter alertTimes.
 	
-	parameter this is NewController(Countdown_setup@, Countdown_loop@, Countdown_Err@).
+	parameter this is NewController("countdown", Countdown_setup@, Countdown_loop@, Countdown_Err@).
 
 	this:add("callbackCtrl", callbackCtrl).
 	this:add("callbackFunc", callbackFunc).

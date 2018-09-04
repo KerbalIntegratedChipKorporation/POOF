@@ -10,7 +10,7 @@ function Timer_New
 	parameter callbackFunc.
 	parameter autoReset is true.
 	
-	local this is NewController(Timer_setup@, Timer_loop@, Timer_Err@).
+	local this is NewController("timer", Timer_setup@, Timer_loop@, Timer_Err@).
 	
 	// Add arguments to the controller
 	// this:add("x", x).

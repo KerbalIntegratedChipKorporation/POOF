@@ -8,7 +8,7 @@ Include("console").
 
 function CPing_New
 {
-	local this is NewController(CPing_setup@, CPing_loop@, CPing_Err@).
+	local this is NewController("cping", CPing_setup@, CPing_loop@, CPing_Err@).
 	
 	this:add("timer", Timer_New(0.5, this, "ping")).
 	this:add("ping", CPing_Ping@).

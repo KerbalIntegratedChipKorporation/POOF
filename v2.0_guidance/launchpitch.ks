@@ -9,7 +9,7 @@ function LaunchPitch_New
 	parameter ap.
 	parameter hdg.
 	
-	local this is NewController(LaunchPitch_setup@, LaunchPitch_loop@, LaunchPitch_Err@).
+	local this is NewController("launchpitch", LaunchPitch_setup@, LaunchPitch_loop@, LaunchPitch_Err@).
 	
 	this:add("platform", platform).
 	this:add("ap", ap).

@@ -5,7 +5,7 @@ Include("controller").
 
 function Exec_New
 {	
-	local this is NewController(Exec_setup@, Exec_loop@, Exec_Err@).
+	local this is NewController("exec", Exec_setup@, Exec_loop@, Exec_Err@).
 		
 	this:add("controllers", lexicon()).
 	this:add("controllerList", list()).

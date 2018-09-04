@@ -4,11 +4,12 @@
 // Creates a new active controller and returns it.
 function NewController
 {
+	parameter controllerType.
 	parameter setup.
 	parameter loop.
 	parameter err.
 	
-	return lexicon("enabled", true, "setup", setup, "loop", loop, "err", err, "call", CTRL_Call@).
+	return lexicon("enabled", true, "type", controllerType, "setup", setup, "loop", loop, "err", err, "call", CTRL_Call@).
 }
 
 // Checks if a controller is null. A controller is null
@@ -26,6 +27,7 @@ function NullController
 	return lexicon().
 }
 
+// Provides a safe way to call controller functions.
 function CTRL_Call
 {
 	parameter ctrl.

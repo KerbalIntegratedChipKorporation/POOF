@@ -7,7 +7,7 @@ function Guidance_New
 	// Add parameters here
 	// parameter x.
 	
-	local this is NewController(Guidance_setup@, Guidance_loop@, Guidance_Err@).
+	local this is NewController("guidance", Guidance_setup@, Guidance_loop@, Guidance_Err@).
 	
 	// Add arguments to the controller
 	// this:add("x", x).

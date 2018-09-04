@@ -12,7 +12,7 @@ function Stage_New
 	parameter stageNumber.
 	parameter stageInfo.
 	
-	local this is NewController(Stage_setup@, Stage_loop@, Stage_Err@).
+	local this is NewController("stage", Stage_setup@, Stage_loop@, Stage_Err@).
 
 	// Add arguments to the controller
 	// this:add("x", x).
