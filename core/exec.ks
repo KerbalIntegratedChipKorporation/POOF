@@ -15,6 +15,7 @@ function Exec_New
 	this:add("StartController", Exec_StartController@).
 	this:add("GetController", Exec_GetController@).
 	this:add("ControllerCall", Exec_Call@).
+	this:add("GetControllersByType", Exec_GetControllersByType@).
 	
 	return this.
 }
@@ -155,11 +156,13 @@ function Exec_GetControllersByType
 	
 	local controllers is list().
 	
-	from { local i is 0. } until i = this:length step { set i to i + 1. } do
+	from { local i is 0. } until i = this["controllers"]:length step { set i to i + 1. } do
 	{
-		if this[this:keys[i]]["type"] = type then
+		local key is this["controllers"]:keys[i].
+		local ctrl is this["controllers"][key].
+		if ctrl["type"] = type
 		{
-			controllers:add(this[this:keys[i]]).
+			controllers:add(ctrl).
 		}
 	}
 	

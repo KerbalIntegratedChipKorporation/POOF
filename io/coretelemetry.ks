@@ -20,6 +20,7 @@ function CoreTelemetry_New
 	// this:add("foo" foo@).
 	
 	this:add("getdata", CoreTelemetry_GetData@).
+	this:add("padpos", latlng(0.1025, 74.57528)).
 	
 	return this.
 }
@@ -70,12 +71,15 @@ function CoreTelemetry_GetData
 	
 	local data is lexicon().
 	
-	data:add("ID", this["exec"][""]
+	local exec is this["exec"].
+	local idgen is exec["GetControllersByType"](exec, "idgen")[0].
+	local id is idgen["id"].
+	data:add("ID", id).
 	data:add("UT", time:seconds).
 	
 	if missiontime = 0
 	{
-		data:add("MET", State_GetRegister("Countdown")).
+		
 	}
 	else
 	{
@@ -83,10 +87,9 @@ function CoreTelemetry_GetData
 	}
 	
 	local distPerDeg is (2 * 600000 * constant():pi) / 360.
-	local downrange is sqrt(((padPos:lat - ship:geoposition:lat)^2) + (padPos:lng - ship:geoposition:lng)^2) * distPerDeg.
+	local downrange is sqrt(((this["padPos"]:lat - ship:geoposition:lat)^2) + (this["padPos"]:lng - ship:geoposition:lng)^2) * distPerDeg.
 	// This distance is in meters.
 	
-	data:add("Prog", State_GetRegister("Prog")).
 	data:add("Mass", round(ship:mass, 2)).
 	data:add("Alt", round(ship:altitude, 0)).
 	data:add("Downrange", round(downrange, 2)).

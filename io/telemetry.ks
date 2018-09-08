@@ -39,7 +39,7 @@ function Telemetry_setup
 	{
 		deletepath("1:/telemetry.txt").
 	}
-	create("1:/telemetry.ks").
+	create("1:/telemetry.txt").
 	this:add("telemFile", open("1:/telemetry.txt")).
 	
 	return 0.
@@ -54,7 +54,8 @@ function Telemetry_loop
 	
 	// Do your control loop here
 	
-	this:["telemFile"]:clear().
+	local telemFile is this["telemFile"].
+	telemFile:clear().
 	
 	from {local i is 0. } until i = this["frameFuncs"]:length step { set i to i + 1. } do
 	{
@@ -65,7 +66,7 @@ function Telemetry_loop
 		
 		from {local j is 0. } until j = frame:length step { set j to j + 1. } do
 		{
-			local key is frame:keys[i].
+			local key is frame:keys[j].
 			telemFile:write(key).
 			telemFile:write(":").
 			telemFile:writeln(frame[key]:tostring()).

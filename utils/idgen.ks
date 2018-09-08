@@ -8,7 +8,7 @@ function IDGen_New
 	// Add parameters here
 	// parameter x.
 	
-	local this is NewController(IDGen_setup@, IDGen_loop@, IDGen_Err@).
+	local this is NewController("IDGen", IDGen_setup@, IDGen_loop@, IDGen_Err@).
 	
 	this:add("id", random()).
 	
