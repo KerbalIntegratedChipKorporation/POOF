@@ -17,6 +17,7 @@ but I figured I might as well let everyone else look at it if they want to.
 * Semi-automated garbage collector - Controllers can mark themselves to be collected by a garbage collector. Garbage collection happens automatically during the central loop. ![checkbox][check]
 * System state recovery - In the case that a controller crashes everything and the kOS core returns to the idle state, a secondary core can provide recovery capabiilty by restarting the main core.
 * Priority queue services - The executive program will run high-priority programs first, and if a particular length of time elapses, unrun programs will not be run in that loop.
+* Inheritance - Some sort of well-defined ability for controllers to inherit from other controllers. The details are vague right now.
 
 ## Additional Considerations
 
