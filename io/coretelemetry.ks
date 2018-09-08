@@ -20,7 +20,7 @@ function CoreTelemetry_New
 	// this:add("foo" foo@).
 	
 	this:add("getdata", CoreTelemetry_GetData@).
-	this:add("padpos", latlng(0.1025, 74.57528)).
+	this:add("padpos", ship:geoposition).
 	
 	return this.
 }

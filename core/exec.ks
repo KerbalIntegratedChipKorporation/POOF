@@ -160,9 +160,12 @@ function Exec_GetControllersByType
 	{
 		local key is this["controllers"]:keys[i].
 		local ctrl is this["controllers"][key].
-		if ctrl["type"] = type
+		if ctrl:haskey("type")
 		{
-			controllers:add(ctrl).
+			if ctrl["type"] = type
+			{
+				controllers:add(ctrl).
+			}
 		}
 	}
 	

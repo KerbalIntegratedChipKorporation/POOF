@@ -26,9 +26,6 @@ This framework is running on a slightly-modified version of kOS, which allows fi
 Therefore, certain parts of the framework (such as the telemetry and uplink components) are not guaranteed to work on a stock version of
 kOS.
 
-### Framework Versioning
-This framework was originally envisioned as version 2 of my personal kOS standard library. Its primary goal is to implement all of the features of my original standard library, but in a way that's easier to control.
-
 ### Speed
 For obvious reasons, this framework cannot run code super fast. For sanity's sake, you should never write blocking code (i.e. don't use the `wait` command), as this will stop EVERYTHING while it is executed and destroys the point of having this framework in the first place.
 If you want to wait a particular amount of time, use a timer.
