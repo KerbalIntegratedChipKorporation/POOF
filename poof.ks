@@ -6,9 +6,9 @@
 // Copies the provided version of the standard library to the provided directory.
 function stdlib_GetLibrary
 {
-	local parameter vers.
+	local parameter namespace.
 	
-	copypath("0:/stdlib/reload.ks", "1:/reload.ks").
+	copypath("0:/poof/reload.ks", "1:/reload.ks").
 	
 	local lastPath is path().
 	
@@ -21,7 +21,7 @@ function stdlib_GetLibrary
 	switch to 1.
 	createdir("stdlib").
 	
-	local stdlibPath is "0:/stdlib/v" + vers.
+	local stdlibPath is "0:/poof/" + namespace.
 	
 	if exists(stdlibPath)
 	{
@@ -38,15 +38,15 @@ function stdlib_GetLibrary
 
 function stdlib_AppendLibrary
 {
-	local parameter vers.
+	local parameter namespace.
 	
-	copypath("0:/stdlib/reload.ks", "1:/reload.ks").
+	copypath("0:/poof/reload.ks", "1:/reload.ks").
 	
 	local lastPath is path().
 	
 	local localPath is "1:/stdlib/".
 	
-	local stdlibPath is "0:/stdlib/v" + vers.
+	local stdlibPath is "0:/poof/" + namespace.
 	
 	if exists(stdlibPath)
 	{

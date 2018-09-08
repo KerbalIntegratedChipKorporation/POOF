@@ -19,6 +19,8 @@ function CoreTelemetry_New
 	// Add optional user functions to the controller
 	// this:add("foo" foo@).
 	
+	this:add("getdata", CoreTelemetry_GetData@).
+	
 	return this.
 }
 
