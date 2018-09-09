@@ -148,6 +148,7 @@ function Stage_GetData
 	local data is lexicon().
 	
 	data:add("stageNumber", this["number"]).
+	data:add("stageEnabled", this["enabled"]).
 	data:add("stageTimerDelta", this["timer"]["delta"]).
 	data:add("spoolTime", this["spoolTime"]).
 	data:add("throttle", this["throttle"]).
@@ -174,6 +175,7 @@ function Stage_Shutdown
 {
 	parameter this.
 
+	set this["enabled"] to false.
 	Stage_SetStatus(this, "shutdown").
 	set this["throttle"] to 0.
 	for e in this["engines"]
