@@ -7,7 +7,7 @@ function Telemetry_New
 	// Add parameters here
 	// parameter x.
 	
-	local this is NewController("Telemetry", Telemetry_setup@, Telemetry_loop@, Telemetry_Err@).
+	local this is NewController("Telemetry", Telemetry_setup@, Telemetry_loop@, Telemetry_Err@, Telemetry_GetData@).
 	
 	// Add arguments to the controller
 	// this:add("x", x).
@@ -57,19 +57,26 @@ function Telemetry_loop
 	local telemFile is this["telemFile"].
 	telemFile:clear().
 	
-	from {local i is 0. } until i = this["frameFuncs"]:length step { set i to i + 1. } do
+	//from {local i is 0. } until i = this["frameFuncs"]:length step { set i to i + 1. } do
+	from { local i is 0. } until i = this["exec"]["controllerList"]:length step { set i to i + 1. } do	
 	{
-		local obj is this["frameFuncs"]:keys[i].
-		local func is this["frameFuncs"][obj].
+		//local obj is this["frameFuncs"]:keys[i].
+		local name is this["exec"]["controllerList"][i].
+		local obj is this["exec"]["controllers"][name].
+		//local func is this["frameFuncs"][obj].
 		
-		local frame is obj[func](obj).
-		
-		from {local j is 0. } until j = frame:length step { set j to j + 1. } do
+		//local frame is obj[func](obj).
+		if not obj:length = 0
 		{
-			local key is frame:keys[j].
-			telemFile:write(key).
-			telemFile:write(":").
-			telemFile:writeln(frame[key]:tostring()).
+			local frame is obj["getdata"]:call(obj).
+			
+			from {local j is 0. } until j = frame:length step { set j to j + 1. } do
+			{
+				local key is frame:keys[j].
+				telemFile:write(key).
+				telemFile:write(":").
+				telemFile:writeln(frame[key]:tostring()).
+			}
 		}
 	}
 	
@@ -94,4 +101,17 @@ function Telemetry_Err
 	// Do your error handling here
 	
 	return 0.
+}
+
+// This function is intended to return telemetry data.
+function Telemetry_GetData
+{
+	parameter this.
+	
+	local data is lexicon().
+	
+	// Add your data points here
+	// data:add("key", value).
+	
+	return data.
 }

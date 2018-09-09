@@ -5,7 +5,7 @@ Include("controller").
 
 function Exec_New
 {	
-	local this is NewController("exec", Exec_setup@, Exec_loop@, Exec_Err@).
+	local this is NewController("exec", Exec_setup@, Exec_loop@, Exec_Err@, Exec_GetData@).
 		
 	this:add("controllers", lexicon()).
 	this:add("controllerList", list()).
@@ -85,6 +85,15 @@ function Exec_Err
 	// Do your error handling here
 	
 	return 0.
+}
+
+function Exec_GetData
+{
+	parameter this.
+	
+	local data is lexicon().
+	
+	return data.
 }
 
 function Exec_EnableController

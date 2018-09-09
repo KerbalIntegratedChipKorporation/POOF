@@ -8,8 +8,9 @@ function NewController
 	parameter setup.
 	parameter loop.
 	parameter err.
+	parameter getdata.
 	
-	return lexicon("enabled", true, "type", controllerType, "setup", setup, "loop", loop, "err", err, "call", CTRL_Call@).
+	return lexicon("enabled", true, "type", controllerType, "setup", setup, "loop", loop, "err", err, "getdata", getdata@, "call", CTRL_Call@).
 }
 
 // Checks if a controller is null. A controller is null

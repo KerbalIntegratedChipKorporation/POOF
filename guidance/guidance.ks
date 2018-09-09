@@ -7,7 +7,7 @@ function Guidance_New
 	// Add parameters here
 	// parameter x.
 	
-	local this is NewController("guidance", Guidance_setup@, Guidance_loop@, Guidance_Err@).
+	local this is NewController("guidance", Guidance_setup@, Guidance_loop@, Guidance_Err@, Guidance_GetData@).
 	
 	// Add arguments to the controller
 	// this:add("x", x).
@@ -63,4 +63,24 @@ function Guidance_Err
 	// Do your error handling here
 	
 	return 0.
+}
+
+// This function is intended to return telemetry data.
+function Guidance_GetData
+{
+	parameter this.
+	
+	local data is lexicon().
+	
+	data:add("tgtPitch", this["pitch"]).
+	data:add("tgtYaw", this["yaw"]).
+	data:add("tgtRoll", this["roll"]).
+	
+	local dirVec is this["dir"]:vector.
+	
+	data:add("tgtVecX", dirVec:x).
+	data:add("tgtVecY", dirVec:y).
+	data:add("tgtVecZ", dirVec:z).
+	
+	return data.
 }

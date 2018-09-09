@@ -10,7 +10,7 @@ function Timer_New
 	parameter callbackFunc.
 	parameter autoReset is true.
 	
-	local this is NewController("timer", Timer_setup@, Timer_loop@, Timer_Err@).
+	local this is NewController("timer", Timer_setup@, Timer_loop@, Timer_Err@, Timer_GetData@).
 	
 	// Add arguments to the controller
 	// this:add("x", x).
@@ -26,6 +26,7 @@ function Timer_New
 	// Add state variables to the controller
 	// this:add("bar", 0).
 	this:add("lastElapsed", time:seconds).
+	this:add("delta", 0).
 	
 	return this.
 }
@@ -47,7 +48,8 @@ function Timer_loop
 	// DO NOT ADD ADDITIONAL PARAMETERS!
 	parameter this.
 	
-	if time:seconds - this["lastElapsed"] >= this["interval"]
+	set this["delta"] to time:seconds - this["lastElapsed"].
+	if this["delta"] >= this["interval"]
 	{
 		this["callbackCtrl"]["call"](this["callbackCtrl"], this["callbackFunc"]).
 		if this["autoReset"] = false
@@ -72,4 +74,17 @@ function Timer_Err
 	// Do your error handling here
 	
 	return 0.
+}
+
+// This function is intended to return telemetry data.
+function Timer_GetData
+{
+	parameter this.
+	
+	local data is lexicon().
+	
+	// Add your data points here
+	// data:add("key", value).
+	
+	return data.
 }

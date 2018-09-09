@@ -8,7 +8,7 @@ function IDGen_New
 	// Add parameters here
 	// parameter x.
 	
-	local this is NewController("IDGen", IDGen_setup@, IDGen_loop@, IDGen_Err@).
+	local this is NewController("IDGen", IDGen_setup@, IDGen_loop@, IDGen_Err@, IDGen_GetData@).
 	
 	this:add("id", random()).
 	
@@ -50,4 +50,16 @@ function IDGen_Err
 	// Do your error handling here
 	
 	return 0.
+}
+
+// This function is intended to return telemetry data.
+function IDGen_GetData
+{
+	parameter this.
+	
+	local data is lexicon().
+	
+	data:add("id", this["ID"]).
+	
+	return data.
 }

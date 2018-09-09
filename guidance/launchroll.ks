@@ -10,7 +10,7 @@ function LaunchRoll_New
 	parameter rate.
 	parameter pitchProg.	// pitch program name
 	
-	local this is NewController("launchroll", LaunchRoll_setup@, LaunchRoll_loop@, LaunchRoll_Err@).
+	local this is NewController("launchroll", LaunchRoll_setup@, LaunchRoll_loop@, LaunchRoll_Err@, LaunchRoll_GetData@).
 	
 	this:add("platform", platform).
 	this:add("lv", lv).
@@ -77,4 +77,15 @@ function LaunchRoll_Err
 	return 0.
 }
 
-
+// This function is intended to return telemetry data.
+function LaunchRoll_GetData
+{
+	parameter this.
+	
+	local data is lexicon().
+	
+	// Add your data points here
+	// data:add("key", value).
+	
+	return data.
+}

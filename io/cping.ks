@@ -8,7 +8,7 @@ Include("console").
 
 function CPing_New
 {
-	local this is NewController("cping", CPing_setup@, CPing_loop@, CPing_Err@).
+	local this is NewController("cping", CPing_setup@, CPing_loop@, CPing_Err@, CPing_GetData@).
 	
 	this:add("timer", Timer_New(0.5, this, "ping")).
 	this:add("ping", CPing_Ping@).
@@ -41,6 +41,19 @@ function CPing_Err
 	parameter caller.
 
 	return 0.
+}
+
+// This function is intended to return telemetry data.
+function CPing_GetData
+{
+	parameter this.
+	
+	local data is lexicon().
+	
+	// Add your data points here
+	// data:add("key", value).
+	
+	return data.
 }
 
 function CPing_Ping

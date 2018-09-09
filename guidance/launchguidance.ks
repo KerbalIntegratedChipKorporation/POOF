@@ -7,7 +7,7 @@ function LaunchGuidance_New
 	parameter platform.
 	parameter lv.
 	
-	local this is NewController("launchguidance", LaunchGuidance_setup@, LaunchGuidance_loop@, LaunchGuidance_Err@).
+	local this is NewController("launchguidance", LaunchGuidance_setup@, LaunchGuidance_loop@, LaunchGuidance_Err@, LaunchGuidance_GetData@).
 	
 	this:add("platform", platform).
 	this:add("lv", lv).
@@ -62,4 +62,17 @@ function LaunchGuidance_Err
 	// Do your error handling here
 	
 	return 0.
+}
+
+// This function is intended to return telemetry data.
+function LaunchGuidance_GetData
+{
+	parameter this.
+	
+	local data is lexicon().
+	
+	// Add your data points here
+	// data:add("key", value).
+	
+	return data.
 }

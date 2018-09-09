@@ -9,7 +9,7 @@ function LaunchPitch_New
 	parameter ap.
 	parameter hdg.
 	
-	local this is NewController("launchpitch", LaunchPitch_setup@, LaunchPitch_loop@, LaunchPitch_Err@).
+	local this is NewController("launchpitch", LaunchPitch_setup@, LaunchPitch_loop@, LaunchPitch_Err@, LaunchPitch_GetData@).
 	
 	this:add("platform", platform).
 	this:add("ap", ap).
@@ -69,4 +69,17 @@ function LaunchPitch_Err
 	// Do your error handling here
 	
 	return 0.
+}
+
+// This function is intended to return telemetry data.
+function LaunchPitch_GetData
+{
+	parameter this.
+	
+	local data is lexicon().
+	
+	// Add your data points here
+	// data:add("key", value).
+	
+	return data.
 }

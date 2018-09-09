@@ -8,7 +8,7 @@ function CoreTelemetry_New
 	// Add parameters here
 	// parameter x.
 	
-	local this is NewController("CoreTelemetry", CoreTelemetry_setup@, CoreTelemetry_loop@, CoreTelemetry_Err@).
+	local this is NewController("CoreTelemetry", CoreTelemetry_setup@, CoreTelemetry_loop@, CoreTelemetry_Err@, CoreTelemetry_GetData@).
 	
 	// Add arguments to the controller
 	// this:add("x", x).
@@ -19,7 +19,6 @@ function CoreTelemetry_New
 	// Add optional user functions to the controller
 	// this:add("foo" foo@).
 	
-	this:add("getdata", CoreTelemetry_GetData@).
 	this:add("padpos", ship:geoposition).
 	
 	return this.
@@ -74,7 +73,7 @@ function CoreTelemetry_GetData
 	local exec is this["exec"].
 	local idgen is exec["GetControllersByType"](exec, "idgen")[0].
 	local id is idgen["id"].
-	data:add("ID", id).
+	//data:add("ID", id).
 	data:add("UT", time:seconds).
 	
 	if missiontime = 0

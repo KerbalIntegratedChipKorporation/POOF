@@ -8,7 +8,7 @@ function LaunchVehicle_New
 	// Add parameters here
 	parameter stageInfo.
 	
-	local this is NewController("launchvehicle", LaunchVehicle_setup@, LaunchVehicle_loop@, LaunchVehicle_Err@).
+	local this is NewController("launchvehicle", LaunchVehicle_setup@, LaunchVehicle_loop@, LaunchVehicle_Err@, LaunchVehicle_GetData@).
 	
 	// Add arguments to the controller
 	// this:add("x", x).
@@ -70,6 +70,17 @@ function LaunchVehicle_Err
 	// Do your error handling here
 	
 	return 0.
+}
+
+// This function is intended to return telemetry data.
+function LaunchVehicle_GetData
+{
+	parameter this.
+	
+	local s is LaunchVehicle_Stage(this).
+	local data is s["getdata"](s).
+	
+	return data.
 }
 
 function LaunchVehicle_AddStage

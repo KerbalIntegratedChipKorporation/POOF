@@ -12,7 +12,7 @@ function Stage_New
 	parameter stageNumber.
 	parameter stageInfo.
 	
-	local this is NewController("stage", Stage_setup@, Stage_loop@, Stage_Err@).
+	local this is NewController("stage", Stage_setup@, Stage_loop@, Stage_Err@, Stage_GetData@).
 
 	// Add arguments to the controller
 	// this:add("x", x).
@@ -138,6 +138,28 @@ function Stage_Err
 	// Do your error handling here
 	
 	return 0.
+}
+
+// This function is intended to return telemetry data.
+function Stage_GetData
+{
+	parameter this.
+	
+	local data is lexicon().
+	
+	data:add("stageNumber", this["number"]).
+	data:add("stageTimerDelta", this["timer"]["delta"]).
+	data:add("spoolTime", this["spoolTime"]).
+	data:add("throttle", this["throttle"]).
+	data:add("ignitionStatus", this["ignitionStatus"]).
+	data:add("twr", this["twr"]).
+	
+	data:add("ullageType", this["ullageType"]).
+	data:add("ullageTime", this["ullageTime"]).
+	
+	data:add("rcsState", this["rcsState"]).
+	
+	return data.
 }
 
 function Stage_Ignition

@@ -13,7 +13,7 @@ function Countdown_New
 	parameter callbackFunc.
 	parameter alertTimes.
 	
-	parameter this is NewController("countdown", Countdown_setup@, Countdown_loop@, Countdown_Err@).
+	parameter this is NewController("countdown", Countdown_setup@, Countdown_loop@, Countdown_Err@, Countdown_GetData@).
 
 	this:add("callbackCtrl", callbackCtrl).
 	this:add("callbackFunc", callbackFunc).
@@ -68,6 +68,20 @@ function Countdown_Err
 	// Do your error handling here
 	
 	return 0.
+}
+
+// This function is intended to return telemetry data.
+function Countdown_GetData
+{
+	parameter this.
+	
+	local data is lexicon().
+	
+	// Add your data points here
+	// data:add("key", value).
+	data:add("countdown", this["countdown"]).
+	
+	return data.
 }
 
 function Countdown_TimerElapsed
