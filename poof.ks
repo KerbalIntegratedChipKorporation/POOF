@@ -8,7 +8,7 @@ function stdlib_GetLibrary
 {
 	local parameter namespace.
 	
-	copypath("0:/poof/reload.ksm", "1:/reload.ksm").
+	copypath("0:/poof/bin/reload.ksm", "1:/reload.ksm").
 	
 	local lastPath is path().
 	
@@ -21,7 +21,7 @@ function stdlib_GetLibrary
 	switch to 1.
 	createdir("stdlib").
 	
-	local stdlibPath is "0:/poof/" + namespace.
+	local stdlibPath is "0:/poof/bin/" + namespace.
 	
 	if exists(stdlibPath)
 	{
@@ -40,13 +40,13 @@ function stdlib_AppendLibrary
 {
 	local parameter namespace.
 	
-	copypath("0:/poof/reload.ksm", "1:/reload.ksm").
+	copypath("0:/poof/bin/reload.ksm", "1:/reload.ksm").
 	
 	local lastPath is path().
 	
 	local localPath is "1:/stdlib/".
 	
-	local stdlibPath is "0:/poof/" + namespace.
+	local stdlibPath is "0:/poof/bin/" + namespace.
 	
 	if exists(stdlibPath)
 	{
