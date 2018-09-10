@@ -8,7 +8,7 @@ function stdlib_GetLibrary
 {
 	local parameter namespace.
 	
-	copypath("0:/poof/reload.ks", "1:/reload.ks").
+	copypath("0:/poof/reload.ksm", "1:/reload.ksm").
 	
 	local lastPath is path().
 	
@@ -40,7 +40,7 @@ function stdlib_AppendLibrary
 {
 	local parameter namespace.
 	
-	copypath("0:/poof/reload.ks", "1:/reload.ks").
+	copypath("0:/poof/reload.ksm", "1:/reload.ksm").
 	
 	local lastPath is path().
 	
@@ -92,5 +92,5 @@ function Include
 {
 	local parameter filename.
 	
-	runoncepath("1:/stdlib/" + filename + ".ks").
+	runoncepath("1:/stdlib/" + filename + ".ksm").
 }

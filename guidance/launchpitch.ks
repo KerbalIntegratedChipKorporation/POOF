@@ -40,14 +40,14 @@ function LaunchPitch_loop
 	// DO NOT ADD ADDITIONAL PARAMETERS!
 	parameter this.
 	
-	if apoapsis > this["ap"]
+	if apoapsis >= this["ap"]
 	{
 		set this["enabled"] to false.
 		
 		this["lv"]["shutdown"](this["lv"]).
 		this:clear().
 	}
-	else
+	else if altitude > 3500
 	{
 		local ap is this["ap"].
 		local hdg is this["hdg"].

@@ -57,6 +57,8 @@ function Stage_New
 	
 	this:add("ignition", Stage_Ignition@).
 	this:add("shutdown", Stage_Shutdown@).
+	this:add("isp", Stage_Isp@).
+	this:add("thrust", Stage_Thrust@).
 	
 	return this.
 }
@@ -314,4 +316,40 @@ function Stage_StartTimer
 	
 	set this["timer"]["interval"] to t.
 	this["timer"]["setup"](this["timer"]).
+}
+
+// Calculates the weighted harmonic mean of the combined Isp.
+function Stage_Isp
+{
+	parameter this.
+	
+	local sumThrust is 0.
+	local sumMdot is 0.
+	
+	for e in this["engines"]
+	{
+		local isp is e:isp.
+		local thrust is e:availablethrust.
+		local mdot is thrust / isp.
+		
+		set sumThrust to sumThrust + thrust.
+		set sumMdot to sumMdot + mdot.
+	}
+	
+	return sumThrust / sumMdot.
+}
+
+// Calculates the total available thrust.
+function Stage_Thrust
+{
+	parameter this.
+	
+	local sumthrust is 0.
+	
+	for e in this["engines"]
+	{
+		set sumThrust to sumThrust + e:availablethrust.
+	}
+	
+	return sumthrust.
 }

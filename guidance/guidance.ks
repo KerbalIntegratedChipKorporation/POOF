@@ -65,6 +65,30 @@ function Guidance_Err
 	return 0.
 }
 
+function Guidance_Prograde
+{
+	local parameter this.
+	local parameter roll.
+
+	set p to prograde * R(0, 0, roll).
+	
+	set this["pitch"] to p:pitch.
+	set this["yaw"] to p:yaw.
+	set this["roll"] to p:roll.
+}
+
+function Guidance_Retrograde
+{
+	local parameter this.
+	local parameter roll.
+
+	set p to retrograde * R(0, 0, roll).
+	
+	set this["pitch"] to p:pitch.
+	set this["yaw"] to p:yaw.
+	set this["roll"] to p:roll.
+}
+
 // This function is intended to return telemetry data.
 function Guidance_GetData
 {
