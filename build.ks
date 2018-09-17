@@ -25,7 +25,6 @@ function Build_Namespace
 
 Build_Namespace("core").
 Build_Namespace("debug").
-Build_Namespace("experimental").
 Build_Namespace("guidance").
 Build_Namespace("io").
 Build_Namespace("utils").

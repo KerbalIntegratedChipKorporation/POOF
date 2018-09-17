@@ -44,25 +44,32 @@ function LaunchRoll_loop
 	// DO NOT ADD ADDITIONAL PARAMETERS!
 	parameter this.
 	
-	// Do your control loop here
 	if altitude > 2000
 	{
-		if this["hdg"] - this["target"] < 1.0
+		local deltaTime is time:seconds - this["time"].
+		local deltaRoll is this["rate"] * deltaTime.	
+	
+		set this["hdg"] to this["hdg"] + deltaRoll.
+		local diff is abs(this["hdg"] - this["target"]).
+		if diff < abs(deltaRoll * 2)
 		{
-			set this["enabled"] to false.
-			this["exec"]["enablecontroller"](this["exec"], this["pitchProg"]).
-			this:clear().
+			set this["hdg"] to this["target"].
 		}
-		else
-		{
-			local deltaTime is time:seconds - this["time"].
-			local deltaRate is this["rate"] * deltaTime.
-			
-			set this["hdg"] to this["hdg"] + deltaRate.
-			set this["platform"]["roll"] to this["hdg"].
-		}
+		set this["platform"]["roll"] to 180 - this["hdg"].
 	}
 	
+	if altitude > 3500
+	{
+		set this["enabled"] to false.
+		this["exec"]["enablecontroller"](this["exec"], this["pitchProg"]).
+		this:clear().
+	}
+	
+	if this:haskey("time")
+	{
+		set this["time"] to time:seconds.
+	}
+
 	return 0.
 }
 

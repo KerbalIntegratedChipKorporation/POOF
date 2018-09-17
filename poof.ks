@@ -61,6 +61,28 @@ function stdlib_AppendLibrary
 	return true.
 }
 
+// Loads code exclusively from the experimental source code folder.
+function stdlib_LoadExperimental
+{	
+	local lastPath is path().
+	
+	local localPath is "1:/stdlib/".
+	
+	local stdlibPath is "0:/poof/experimental/".
+	
+	if exists(stdlibPath)
+	{
+		_stdlib_CopyPath(stdlibPath, localPath).
+	}
+	else
+	{
+		return false.
+	}
+	
+	cd(lastPath).
+	return true.
+}
+
 function _stdlib_CopyPath
 {
 	local parameter source.
@@ -93,4 +115,12 @@ function Include
 	local parameter filename.
 	
 	runoncepath("1:/stdlib/" + filename + ".ksm").
+}
+
+// Includes non-compiled (experimental) code.
+function IncludeX
+{
+	local parameter filename.
+	
+	runoncepath("1:/stdlib/" + filename + ".ks").
 }
