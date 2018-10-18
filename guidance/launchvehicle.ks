@@ -32,6 +32,7 @@ function LaunchVehicle_New
 	this:add("ignition", LaunchVehicle_Ignition@).
 	this:add("shutdown", LaunchVehicle_Shutdown@).
 	this:add("addstage", LaunchVehicle_AddStage@).
+	this:add("dostaging", LaunchVehicle_DoStaging@).
 	
 	return this.
 }
@@ -122,4 +123,13 @@ function LaunchVehicle_DisableStage
 	
 	local s is LaunchVehicle_Stage(this).
 	set s["enabled"] to false.
+}
+
+function LaunchVehicle_DoStaging
+{
+	parameter this.
+
+	stage.
+	wait 0.
+	set this["stageId"] to this["stageId"] + 1.
 }

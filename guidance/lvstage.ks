@@ -6,6 +6,7 @@ Include("enum").
 
 global Enum_Ignition is list("none", "rcs", "ullageMotor").
 global Enum_IgnitionStatus is list("shutdown", "ullage", "spool", "ignition").
+global Enum_ThrottleMode is list ("override", "twr", "acc").
 
 function Stage_New
 {
@@ -25,12 +26,14 @@ function Stage_New
 	this:add("ullageMotor", list()).
 	this:add("throttle", 1.0).
 	this:add("ignitionStatus", "shutdown").
-	this:add("twr", stageInfo["twr"]).
+	this:add("throttleParam", stageInfo["twr"]).
+	this:add("throttleMode", "twr").
+	this:add("stageInfo", stageInfo).
 	
 	list engines in shipengines.
 	for eng in shipengines
 	{
-		if eng:tag:startswith(stageInfo["tag"])
+		if eng:tag = stageInfo["tag"]
 		{
 			this["engines"]:add(eng).
 		}
@@ -59,6 +62,7 @@ function Stage_New
 	this:add("shutdown", Stage_Shutdown@).
 	this:add("isp", Stage_Isp@).
 	this:add("thrust", Stage_Thrust@).
+	this:add("arm", Stage_Arm@).
 	
 	return this.
 }
@@ -102,16 +106,25 @@ function Stage_loop
 	}
 	
 	// Throttle
-	local tgtThrustMass is ship:mass * this["twr"].
-	local tgtThrustForce is tgtThrustMass * 9.81.
-	local availableThrust to ship:availablethrust.
-	if availableThrust > 0
+	local availableThrust is Stage_Thrust(this).
+	if this["throttleMode"] = "acc"
 	{
-		set this["throttle"] to tgtThrustForce / availablethrust.
+		local maxAcc is availableThrust / ship:mass.
+		set this["throttle"] to this["throttleParam"] / maxAcc.
 	}
-	else
+	else if this["throttleMode"] = "twr"
 	{
-		set this["throttle"] to 0.
+		local tgtThrustMass is ship:mass * this["throttleParam"].
+		local tgtThrustForce is tgtThrustMass * 9.81.
+		
+		if availableThrust > 0
+		{
+			set this["throttle"] to tgtThrustForce / availablethrust.
+		}
+		else
+		{
+			set this["throttle"] to 0.
+		}
 	}
 
 	// Handle ignition sequence
@@ -155,7 +168,8 @@ function Stage_GetData
 	data:add("spoolTime", this["spoolTime"]).
 	data:add("throttle", this["throttle"]).
 	data:add("ignitionStatus", this["ignitionStatus"]).
-	data:add("twr", this["twr"]).
+	data:add("throttleParam", this["throttleParam"]).
+	data:add("throttleMode", this["throttleMode"]).
 	
 	data:add("ullageType", this["ullageType"]).
 	data:add("ullageTime", this["ullageTime"]).
@@ -165,18 +179,30 @@ function Stage_GetData
 	return data.
 }
 
+function Stage_Arm
+{
+	parameter this.
+	
+	for e in this["engines"]
+	{
+		e:activate().
+	}
+}
+
 function Stage_Ignition
 {
 	parameter this.
 	
-	set this["enabled"] to true.
 	this["setup"](this).
+	set this["enabled"] to true.
+	set this["throttle"] to 1.
 }
 
 function Stage_Shutdown
 {
 	parameter this.
 
+	unlock throttle.
 	set this["enabled"] to false.
 	Stage_SetStatus(this, "shutdown").
 	set this["throttle"] to 0.
@@ -267,6 +293,7 @@ function Stage_UllageMotor
 	{
 		unlock throttle.
 		Stage_StartTimer(this, this["ullageTime"]).
+		set this["ignitionStatus"] to "ullage".
 		
 		for e in this["ullageMotor"]
 		{
@@ -352,4 +379,27 @@ function Stage_Thrust
 	}
 	
 	return sumthrust.
+}
+
+function Stage_Refresh
+{
+	parameter this.
+	
+	this["engines"]:clear().
+	this["ullageMotor"]:clear().
+	list engines in shipengines.
+	for eng in shipengines
+	{
+		if eng:tag = this["stageInfo"]["tag"]
+		{
+			this["engines"]:add(eng).
+		}
+		if this["stageInfo"]["umTag"] <> ""
+		{
+			if eng:tag = this["stageInfo"]["umTag"]
+			{
+				this["ullageMotor"]:add(eng).
+			}
+		}
+	}
 }

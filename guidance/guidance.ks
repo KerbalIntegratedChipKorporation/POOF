@@ -23,6 +23,9 @@ function Guidance_New
 	this:add("yaw", 0).
 	this:add("roll", 180).
 	
+	this:add("unlock", Guidance_Unlock@).
+	this:add("lock", Guidance_Lock@).
+	
 	return this.
 }
 
@@ -107,4 +110,18 @@ function Guidance_GetData
 	data:add("tgtVecZ", dirVec:z).
 	
 	return data.
+}
+
+function Guidance_Unlock
+{
+	parameter this.
+	
+	unlock steering.
+}
+
+function Guidance_Lock
+{
+	parameter this.
+	
+	lock steering to this["dir"].
 }
