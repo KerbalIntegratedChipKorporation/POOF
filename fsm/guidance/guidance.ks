@@ -4,7 +4,7 @@ Include("statemachine").
 Include("list").
 Include("navball").
 
-global GuidanceModes is list("LocalVertical", "Prograde", "Retrograde", "Vector", "NullRates").
+global GuidanceModes is list("LocalVertical", "Prograde", "Retrograde", "Vector", "NullRates", "Heading").
 
 function Guidance_New
 {
@@ -47,6 +47,7 @@ function Guidance_New
 	this["states"]:add(Guidance_RetrogradeMode@).
 	this["states"]:add(Guidance_VectorMode@).
 	this["states"]:add(Guidance_NullRatesMode@).
+	this["states"]:add(Guidance_HeadingMode@).
 	
 	return this.
 }
@@ -158,6 +159,18 @@ function Guidance_NullRatesMode
 	
 	set this["dir"] to ship:facing.
 	return 0.
+}
+
+function Guidance_HeadingMode
+{
+	local parameter this.
+	
+	// Set the direction the heading defined as:
+	// COMPASS HEADING = YAW
+	// PITCH RELATIVE ABOVE HORIZON = PITCH
+	// LEFT-RIGHT (+/-) ROLL = ROLL
+	
+	set this["dir"] to heading(this["yaw"], this["pitch"]) * R(0,0,this["roll"]).
 }
 
 ////////////////////////////////////////////////////////////////
