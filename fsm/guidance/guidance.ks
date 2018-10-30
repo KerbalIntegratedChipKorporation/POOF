@@ -171,6 +171,8 @@ function Guidance_HeadingMode
 	// LEFT-RIGHT (+/-) ROLL = ROLL
 	
 	set this["dir"] to heading(this["yaw"], this["pitch"]) * R(0,0,this["roll"]).
+	
+	return 0.
 }
 
 ////////////////////////////////////////////////////////////////
