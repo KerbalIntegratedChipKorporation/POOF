@@ -11,11 +11,24 @@ function _Navball_GetEastVec
 
 function Navball_GetCompass
 {
-	local pointing is ship:facing:forevector.
+	return Navball_GetCompassDir(ship:facing).
+}
+
+function Navball_GetCompassDir
+{
+	parameter dir.
+	
+	return Navball_GetCompassVec(dir:vector).
+}
+
+function Navball_GetCompassVec
+{
+	parameter vec.
+	
 	local east is _Navball_GetEastVec().
 	
-	local trigX is vdot(ship:north:vector, pointing).
-	local trigY is vdot(east, pointing).
+	local trigX is vdot(ship:north:vector, vec).
+	local trigY is vdot(east, vec).
 	
 	local result is arctan2(trigY, trigX).
 	
@@ -30,21 +43,51 @@ function Navball_GetCompass
 }
 
 function Navball_GetPitch
+{	
+	return Navball_GetPitchDir(ship:facing).
+}
+
+function Navball_GetPitchDir
 {
-	return 90 - vang(ship:up:vector, ship:facing:forevector).
+	parameter dir.
+	
+	return Navball_GetPitchVec(dir:vector).
+}
+
+function Navball_GetPitchVec
+{
+	parameter vec.
+	
+	return 90 - vang(ship:up:vector, vec).
 }
 
 function Navball_GetRoll
 {
-	if vang(ship:facing:vector, ship:up:vector) < 0.2
+	return Navball_GetRollDir(ship:facing).
+}
+
+function Navball_GetRollDir
+{
+	parameter dir.
+	
+	return Navball_GetRollVec(dir:vector, dir:starvector, dir:topvector).
+}
+
+function Navball_GetRollVec
+{
+	parameter foreVec.
+	parameter starVec.
+	parameter topVec.
+
+	if vang(foreVec, ship:up:vector) < 0.2
 	{
 		return 0.
 	}
 	else
 	{
-		local raw is vang(vxcl(ship:facing:vector, ship:up:vector), ship:facing:starvector).
+		local raw is vang(vxcl(foreVec, ship:up:vector), starVec).
 		
-		if vang(ship:up:vector, ship:facing:topvector) > 90
+		if vang(ship:up:vector, topVec) > 90
 		{
 			if raw > 90
 			{

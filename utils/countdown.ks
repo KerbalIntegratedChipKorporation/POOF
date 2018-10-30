@@ -17,10 +17,11 @@ function Countdown_New
 
 	this:add("callbackCtrl", callbackCtrl).
 	this:add("callbackFunc", callbackFunc).
-	this:add("timer", Timer_New(1.0, this, "TimerElapsed", true)).
+	//this:add("timer", Timer_New(1.0, this, "TimerElapsed", true)).
 	this:add("countdown", countdownLength).
 	this:add("alertTimes", alertTimes).
 	this:add("timerelapsed", Countdown_TimerElapsed@).
+	this:add("lastUT", time:seconds).
 	
 	this:add("hold", Countdown_Hold@).
 	this:add("resume", Countdown_Resume@).
@@ -38,7 +39,7 @@ function Countdown_setup
 	// DO NOT ADD ADDITIONAL PARAMETERS!
 	parameter this.
 	
-	this["timer"]["setup"](this["timer"]).
+	//this["timer"]["setup"](this["timer"]).
 	Countdown_Resume(this).
 	
 	return 0.
@@ -51,9 +52,17 @@ function Countdown_loop
 	// DO NOT ADD ADDITIONAL PARAMETERS!
 	parameter this.
 	
-	if this["timer"]["enabled"]
+	//if this["timer"]["enabled"]
+	//{
+	//	this["timer"]["loop"](this["timer"]).
+	//}
+	
+	if this["running"]
 	{
-		this["timer"]["loop"](this["timer"]).
+		local dT to this["lastUT"] - time:seconds.
+		set this["countdown"] to this["countdown"] - dT.
+		set this["lastUT"] to time:seconds.
+		Countdown_TimerElapsed(this).
 	}
 	
 	return 0.
@@ -102,12 +111,12 @@ function Countdown_TimerElapsed
 	clearscreen.
 	Console_print("T-" + minute + ":" + second).
 	
-	if this["alertTimes"]:contains(this["countdown"])
+	if this["alertTimes"]:contains(round(this["countdown"])).
 	{
 		this["callbackCtrl"][this["callbackFunc"]](this["callbackCtrl"]).
 	}
 	
-	if this["countdown"] = 0
+	if this["countdown"] <= 0
 	{
 		this:clear().
 	}
@@ -117,7 +126,6 @@ function Countdown_Hold
 {
 	parameter this.
 	
-	set this["timer"]["enabled"] to false.
 	set this["running"] to false.
 }
 
@@ -125,6 +133,5 @@ function Countdown_Resume
 {
 	parameter this.
 	
-	set this["timer"]["enabled"] to true.
 	set this["running"] to true.
 }

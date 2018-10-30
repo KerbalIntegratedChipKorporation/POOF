@@ -20,6 +20,16 @@ but I figured I might as well let everyone else look at it if they want to.
 * Inheritance - Some sort of well-defined ability for controllers to inherit from other controllers. The details are vague right now.
 * Controller-based telemetry - Each controller has its own telemetry output, allowing the controller to transmit data about itself. ![checkbox][check]
 
+### Finite State Machine
+
+I'm adding a finite state machine that will allow better sequencing control and a more compact codebase and smaller set of executables.
+
+* Finite State Machine extension allowing better sequencing control while staying within the existing pseudo-object framework. ![checkbox][check]
+* Core code written to support extension. ![checkbox][check]
+* FSM Guidance.
+* FSM IO
+* FSM Utils
+
 ## Additional Considerations
 
 ### kOS Version

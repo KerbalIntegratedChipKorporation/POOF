@@ -2,6 +2,7 @@
 
 Include("statemachine").
 Include("list").
+Include("navball").
 
 global GuidanceModes is list("LocalVertical", "Prograde", "Retrograde", "Vector", "NullRates").
 
@@ -89,6 +90,25 @@ function Guidance_GetData
 	
 	// Add your data points here
 	// data:add("key", value).
+	
+	local dir is this["dir"].
+	local state is this["state"].
+	
+	data:add("guidanceMode", state).
+	data:add("guidanceModeName", GuidanceModes[state]).
+	data:add("steeringLocked", locked).
+	data:add("dirPitch", Navball_GetPitchDir(dir)).
+	data:add("dirHdg", Navball_GetCompassDir(dir)).
+	data:add("dirRoll", Navball_GetRollDir(dir)).
+	data:add("dirX", dir:vector:x).
+	data:add("dirY", dir:vector:y).
+	data:add("dirZ", dir:vector:z).
+	data:add("pitchVal", this["pitch"]).
+	data:add("yawVal", this["yaw"]).
+	data:add("rollVal", this["roll"]).
+	data:add("vecX", this["vector"]:x).
+	data:add("vecY", this["vector"]:y).
+	data:add("vecZ", this["vector"]:z).
 	
 	return data.
 }

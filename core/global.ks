@@ -8,3 +8,5 @@ when EnableDebug then
 {
 	Include("debug").
 }
+
+global STATIC_AUTOPILOT is lexicon().

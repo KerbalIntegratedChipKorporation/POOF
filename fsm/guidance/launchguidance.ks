@@ -8,6 +8,9 @@ function LaunchGuidance_New
 	// parameter x.
 	parameter platform.
 	parameter lv.
+	parameter ap.
+	parameter hdg.
+	parameter rollRate.
 	
 	local this is NewStateMachine("LaunchGuidance", LaunchGuidance_setup@, LaunchGuidance_Err@, LaunchGuidance_GetData@).
 	
@@ -30,10 +33,17 @@ function LaunchGuidance_New
 	
 	this:add("platform", platform).
 	this:add("lv", lv).
+	this:add("ap", ap).
+	this:add("tgtHdg", hdg).
+	this:add("hdg", 0).
+	this:add("rate", rollRate).
+	this:add("time", time:seconds).
 	
 	set this["states"][0] to LaunchGuidance_Prelaunch@.
 	this["states"]:add(LaunchGuidance_Ignition@).
 	this["states"]:add(LaunchGuidance_Guide@).
+	this["states"]:add(LaunchGuidance_Roll@).
+	this["states"]:add(LaunchGuidance_Pitch@).
 	
 	return this.
 }
@@ -95,6 +105,7 @@ function LaunchGuidance_GetData
 // STATES //
 ////////////////////////////////////////////////////////////////
 
+// State 0
 function LaunchGuidance_Prelaunch
 {
 	parameter this.
@@ -103,6 +114,7 @@ function LaunchGuidance_Prelaunch
 	return 0.
 }
 
+// State 1
 function LaunchGuidance_Ignition
 {
 	parameter this.
@@ -116,11 +128,55 @@ function LaunchGuidance_Ignition
 	return 0.
 }
 
+// State 2
 function LaunchGuidance_Guide
 {
 	parameter this.
 	
-	if altitude > 2000 { this:clear(). }
+	if altitude > 2000 { set this["state"] to 3. }
+	return 0.
+}
+
+// State 3
+function LaunchGuidance_Roll
+{
+	parameter this.
+	
+	if altitude > 3500 { set this["state"] to 4. return 0.}
+	
+	local deltaTime is time:secnds - this["time"}.
+	local deltaRoll is this["rate"] * deltaTime.
+	
+	set this["hdg"] to this["hdg"] + deltaRoll.
+	local diff is abs(this["hdg"] - this["tgtHdg"]).
+	if diff < abs(deltaRoll * 2)
+	{
+		set this["hdg"] to this["tgtHdg"].
+	}
+	set this["platform"]["roll"] to 180 - this["hdg"].
+	
+	return 0.
+}
+
+// State 4
+function LaunchGuidance_Pitch
+{
+	parameter this.
+	
+	local ap is this["ap"].
+	local hdg is this["tgtHdg"].
+	
+	set this["platform"]["pitch"] to -((apoapsis / ap) * 90) * cos(tgtHdg).
+	set this["platform"]["yaw"] to -((apoapsis / ap) * 90) * sin(tgtHdg).
+	set this["platform"]["roll"] to 180 - tgtHdg.
+	
+	// TODO: Throttle down as Ap approaches target Ap. 
+	if apoapsis >= this["ap"]
+	{
+		this["lv"]["shutdown"](this["lv"]).
+		this:clear().
+	}
+	
 	return 0.
 }
 
