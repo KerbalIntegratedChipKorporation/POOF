@@ -26,7 +26,7 @@ I'm adding a finite state machine that will allow better sequencing control and 
 
 * Finite State Machine extension allowing better sequencing control while staying within the existing pseudo-object framework. ![checkbox][check]
 * Core code written to support extension. ![checkbox][check]
-* FSM Guidance.
+* FSM Guidance. ![checkbox][check]
 * FSM IO
 * FSM Utils
 
